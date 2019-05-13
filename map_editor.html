@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Ragnarok Editor</title>
+        <link rel="stylesheet" type="text/css" href="css/map_editor/map_editor.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.min.css">
+        <link rel="stylesheet" href="font-awesome/css/all.css">
+    </head>
+
+    <body>
+        <!-- NAVBAR-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Ragnarok Map Editor</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            File
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="fileDropdown">
+                        <a class="dropdown-item" href="#" id='btn-new'>New <i style="float: right;" class="fas fa-file"></i></a>
+                        <a class="dropdown-item" href="#" id='btn-save'>Save <i style="float: right;" class="fas fa-save"></i></a>
+                        <a class="dropdown-item" href="#" id='btn-load'>Load <i style="float: right;" class="fas fa-upload"></i></a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="viewDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            View
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" id='btn-render'>Render <i style="float: right;" class="fas fa-file"></i></a>
+                        <a class="dropdown-item" href="#" id='btn-edit'>Edit <i style="float: right;" class="fas fa-save"></i></a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- END NAVBAR -->
+
+        <!-- EDITOR -->
+        <div id="editor" class="container-fluid">
+            <div id="ui-container" class="row" >
+                <!-- MAP SECTION -->
+                <div id="map-window" class="col-9">
+                    <div class="ui-wrapper">
+                        <!-- MAP ELEMENT -->
+                        <div id="map" class="map"></div>
+                    </div>
+                </div>
+
+                <!-- PROPERTIES SECTION-->
+                <div class="col-3 p-0">
+                    <div class="ui-wrapper">
+                        <div id="property-window">
+                            <h4 class="text-center pt-3">Property window</h4>
+
+                            <!-- MAP PROPERTIES -->
+                            <form id="map-prop-form" class="mt-3">
+
+                                <!-- MAP NAME -->
+                                <div class="form-group row ml-0 mr-0">
+                                        <label for="input-map-width" class="col-sm-2 col-form-label">Name</label>
+                                        <div class="col-sm-10">
+                                            <input type="string" class="form-control" id="input-map-name" placeholder="Name">
+                                        </div>
+                                    </div>
+
+                                <!-- MAP WIDTH -->
+                                <div class="form-group row ml-0 mr-0">
+                                    <label for="input-map-width" class="col-sm-2 col-form-label">Width</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="input-map-width" placeholder="Width">
+                                    </div>
+                                </div>
+        
+                                <!-- MAP HEIGHT -->
+                                <div class="form-group row ml-0 mr-0">
+                                    <label for="input-map-height" class="col-sm-2 col-form-label">Height</label>
+                                    <div class="col-sm-10">
+                                        <input type="number" class="form-control" id="input-map-height" placeholder="Height">
+                                    </div>
+                                </div>
+                            </form>
+                            <hr/>
+                            
+                            <!-- TILE SET -->
+                            <h4 class="text-center">Tile Set</h4>
+
+                            <div class="col-sm-12" style="max-height: 300px; overflow-y: auto;">
+                                <div id="tileset">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SCRIPTS -->
+        <script type="text/javascript" src="js/map_editor/utils.js"></script>
+        <script type="text/javascript" src="js/map_editor/tile.js"></script>
+        <script type="text/javascript" src="js/map_editor/map.js"></script>
+        <script type="text/javascript" src="js/map_editor/editor.js"></script>
+        <script type="text/javascript" src="js/map_editor/conf.js"></script>
+        <script type="text/javascript" src="js/map_editor/main.js"></script>
+        <script type="text/javascript" src="js/jquery/jquery.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap/bootstrap.min.js"></script>
+    </body>
+</html>

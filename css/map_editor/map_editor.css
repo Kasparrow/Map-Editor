@@ -1,0 +1,44 @@
+#editor 
+{
+    padding: 0px;
+}
+
+#map-window
+{
+    padding: 0px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#ui-container
+{
+    margin: 0px;
+}
+
+#property-window
+{
+    background-color: #eee;
+    border-left: 1px solid rgba(0,0,0,.1);
+}
+
+.map-container
+{
+    padding:0px;
+    margin: 0px;
+    background-color: #aaa;
+}
+
+.map 
+{
+    background-color: #bbb;
+}
+
+.selected 
+{
+    border: 1px solid red;
+}
+
+.unselected 
+{
+    border: 1px solid #999;
+}
