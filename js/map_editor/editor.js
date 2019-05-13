@@ -22,6 +22,7 @@ editor.prototype.init = function ()
 {
     this.create_new();
     this.init_tileset_ui();
+    this.update_layers_ui();
     this.init_dom_events();
     this.set_mode(editor_mode.edit);
 }
@@ -29,9 +30,13 @@ editor.prototype.init = function ()
 editor.prototype.init_map = function ()
 {
     var m = new map({editor: this, width: 10, height: 10});
-    this.set_map(m);
+    var l = new layer({map: m, opacity: 1, visibility: true});
 
+    l.init();
+    m.add_layer(l);
     m.init();
+
+    this.set_map(m);
 }
 
 editor.prototype.init_tileset_ui = function ()
@@ -47,6 +52,34 @@ editor.prototype.init_tileset_ui = function ()
         tile_ui.onclick = this.create_tile_ui_handler(i);
         GL_TILESET_ELEMENT.appendChild(tile_ui);
     }
+}
+
+editor.prototype.update_layers_ui = function ()
+{
+    var layers = this.get_map().get_layers();
+
+    var form = document.createElement('form');
+    form.className = "mt-3"
+
+    for (var i = 0; i < layers.length; i++)
+    {
+        var element = document.createElement('div');
+        element.className = "form-check row ml-0 mr-0";
+        var input = document.createElement('input');
+        input.type = "checkbox";
+        input.className = "form-check-input";
+        input.id = "layer_" + i;
+        var label = document.createElement('label');
+        label.className = "form-check-label";
+        label.setAttribute('for', "layer_" + i);
+        label.innerText = "Layer " + i;
+
+        element.appendChild(input);
+        element.appendChild(label);
+        form.appendChild(element);
+    }
+
+    GL_LAYER_ELEMENT.appendChild(form);
 }
 
 editor.prototype.create_tile_ui_handler = function (id)
@@ -80,6 +113,7 @@ editor.prototype.load = function (data)
 
     m.set_width(dim[0]);
     m.set_height(dim[1]);
+
     GL_MAP_WIDTH_INPUT.value = dim[0];
     GL_MAP_HEIGHT_INPUT.value = dim[1];
     
@@ -119,7 +153,6 @@ editor.prototype.on_map_width = function (e)
     var map = this.get_map();
 
     map.set_width(GL_MAP_WIDTH_INPUT.value);
-    map.rescale_tile_array();
 
     map.clear();
     this.render_map();
@@ -129,10 +162,9 @@ editor.prototype.on_map_height = function (e)
 {
     var map = this.get_map();
 
-    this.get_map().set_height(GL_MAP_HEIGHT_INPUT.value);
-    map.rescale_tile_array();
-
+    map.set_height(GL_MAP_HEIGHT_INPUT.value);
     map.clear();
+    
     this.render_map();
 }
 
@@ -213,10 +245,20 @@ editor.prototype.get_mode = function ()
     return this.mode;
 }
 
+editor.prototype.is_edit_mode = function ()
+{
+    return this.get_mode() === editor_mode.edit;
+}
+
+editor.prototype.is_render_mode = function ()
+{
+    return this.get_mode() === editor_mode.render;
+}
+
 editor.prototype.set_mode = function (mode)
 {
     this.mode = mode;
-    var tiles = this.get_map().get_tiles();
+    var tiles = this.get_map().get_active_layer().get_tiles();
 
     for (var i = 0; i < tiles.length; i++)
     {

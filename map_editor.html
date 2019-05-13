@@ -87,16 +87,28 @@
                                     </div>
                                 </div>
                             </form>
+                            
+                            <!-- ADD LAYER -->
+                            <button id="btn-add-layer" type="button" class="btn btn-secondary ml-3">Add Layer</button>
+
                             <hr/>
                             
                             <!-- TILE SET -->
                             <h4 class="text-center">Tile Set</h4>
 
                             <div class="col-sm-12" style="max-height: 300px; overflow-y: auto;">
-                                <div id="tileset">
-
-                                </div>
+                                <div id="tileset"></div>
                             </div>
+
+                            <hr/>
+
+                            <!-- LAYER -->
+                            <h4 class="text-center">Layers</h4>
+
+                            <div class="col-sm-12" style="max-height: 300px; overflow-y: auto;">
+                                <div id="layers"></div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -106,6 +118,7 @@
         <!-- SCRIPTS -->
         <script type="text/javascript" src="js/map_editor/utils.js"></script>
         <script type="text/javascript" src="js/map_editor/tile.js"></script>
+        <script type="text/javascript" src="js/map_editor/layer.js"></script>
         <script type="text/javascript" src="js/map_editor/map.js"></script>
         <script type="text/javascript" src="js/map_editor/editor.js"></script>
         <script type="text/javascript" src="js/map_editor/conf.js"></script>

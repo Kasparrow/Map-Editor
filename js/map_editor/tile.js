@@ -3,7 +3,7 @@
 function tile (options)
 {
     this.set_img_id(options.img_id);
-    this.set_map(options.map);
+    this.set_layer(options.layer);
 
     this.set_html_element(this.create_html_element());
 }
@@ -23,14 +23,14 @@ tile.prototype.set_img_id = function (img_id)
     this.img_id = img_id;
 }
 
-tile.prototype.get_map = function ()
+tile.prototype.get_layer = function ()
 {
-    return this.map;
+    return this.layer;
 }
 
-tile.prototype.set_map = function (map)
+tile.prototype.set_layer = function (layer)
 {
-    this.map = map;
+    this.layer = layer;
 }
 
 tile.prototype.get_html_element = function ()
@@ -62,5 +62,5 @@ tile.prototype.render = function (parent)
 
 tile.prototype.serialize = function ()
 {
-    return this.get_img_id();
+    return this.get_img_id() + ' ' + this.get_layer().get_index() + '\r\n';
 }
