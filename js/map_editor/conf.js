@@ -18,7 +18,9 @@ var GL_EDITOR_RENDER = document.getElementById('btn-render');
 var GL_EDITOR_EDIT = document.getElementById('btn-edit');
 
 var GL_TILESET_ELEMENT = document.getElementById('tileset');
-var GL_LAYER_ELEMENT = document.getElementById('layers')
+var GL_LAYER_ELEMENT = document.getElementById('layers');
+
+var GL_EDITOR_ADD_LAYER = document.getElementById('btn-add-layer');
 
 var GL_TILE_SET = ['resources/default_tile.png'];
 

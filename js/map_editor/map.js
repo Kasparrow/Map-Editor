@@ -238,6 +238,7 @@ map.prototype.add_layer = function (layer)
 
     layers.push(layer);
     this.set_active_layer(layer);
+    this.render();
 }
 
 map.prototype.remove_layer = function (layer)

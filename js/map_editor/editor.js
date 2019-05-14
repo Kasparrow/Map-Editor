@@ -56,6 +56,8 @@ editor.prototype.init_tileset_ui = function ()
 
 editor.prototype.update_layers_ui = function ()
 {
+    GL_LAYER_ELEMENT.innerHTML = "";
+
     var layers = this.get_map().get_layers();
 
     var form = document.createElement('form');
@@ -69,6 +71,8 @@ editor.prototype.update_layers_ui = function ()
         input.type = "checkbox";
         input.className = "form-check-input";
         input.id = "layer_" + i;
+        input.checked = true;
+        input.onchange = this.create_layer_ui_handler(i);
         var label = document.createElement('label');
         label.className = "form-check-label";
         label.setAttribute('for', "layer_" + i);
@@ -85,13 +89,21 @@ editor.prototype.update_layers_ui = function ()
 editor.prototype.create_tile_ui_handler = function (id)
 {
     return function () {
-        console.log(id);
         var selection = gl_editor.get_map().get_selection();
         for (var i = 0; i < selection.length; i++)
         {
             selection[i].set_img_id(id);
             selection[i].get_html_element().src = GL_TILE_SET[id];
         }
+    }.bind(this);
+}
+
+editor.prototype.create_layer_ui_handler = function (index)
+{
+    return function () {
+        var layers = this.get_map().get_layers();
+        layers[index].toggle();
+        this.on_layer_toggle();
     }.bind(this);
 }
 
@@ -143,6 +155,8 @@ editor.prototype.init_dom_events = function ()
     GL_EDITOR_RENDER.onclick = this.on_render.bind(this);
     GL_EDITOR_EDIT.onclick = this.on_edit.bind(this);
 
+    GL_EDITOR_ADD_LAYER.onclick = this.on_add_layer.bind(this);
+
     window.onresize = this.on_window_resize.bind(this);
 }
 
@@ -164,7 +178,7 @@ editor.prototype.on_map_height = function (e)
 
     map.set_height(GL_MAP_HEIGHT_INPUT.value);
     map.clear();
-    
+
     this.render_map();
 }
 
@@ -211,6 +225,32 @@ editor.prototype.on_render = function (e)
 editor.prototype.on_edit = function (e)
 {
     this.set_mode(editor_mode.edit);
+}
+
+editor.prototype.on_add_layer = function (e)
+{
+    var m = this.get_map();
+
+    var l = new layer({map: m, opacity: 0.5, visibility: true });
+    l.init();
+    m.add_layer(l);
+
+    this.update_layers_ui();
+}
+
+editor.prototype.on_layer_toggle = function ()
+{
+    var m = this.get_map();
+    var layers = m.get_layers();
+
+    for (var i = layers.length - 1; i >= 0; i--)
+    {
+        if (layers[i].get_visibility())
+        {
+            m.set_active_layer(layers[i]);
+            break;
+        }
+    }
 }
 
 // UTILS

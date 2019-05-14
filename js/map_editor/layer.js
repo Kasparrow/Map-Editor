@@ -141,6 +141,19 @@ layer.prototype.set_visibility = function (visibility)
     this.visibility = visibility;
 }
 
+layer.prototype.toggle = function ()
+{
+    var element = this.get_html_element();
+
+    this.visibility = !(this.get_visibility());
+
+    if (this.visibility)
+        element.style.display = 'block';
+    
+    else
+        element.style.display = 'none';
+}
+
 layer.prototype.get_index = function ()
 {
     var m = this.get_map();
