@@ -21,8 +21,9 @@ editor.prototype.create_new = function ()
 editor.prototype.init = function ()
 {
     this.create_new();
-    this.init_tileset_ui();
+    this.update_tileset_ui();
     this.update_layers_ui();
+    this.init_tilesheet_list();
     this.init_dom_events();
     this.set_mode(editor_mode.edit);
 }
@@ -39,18 +40,25 @@ editor.prototype.init_map = function ()
     this.set_map(m);
 }
 
-editor.prototype.init_tileset_ui = function ()
+editor.prototype.update_tileset_ui = function ()
 {
-    for (var i = 0; i < GL_TILE_SET.length; i++)
+    GL_TILESET_ELEMENT.innerHTML = '';
+    var tileset = document.createElement('img');
+    tileset.src = gl_tile_sheet.get_img();
+    tileset.onclick = this.on_tileset_click.bind(this);
+    GL_TILESET_ELEMENT.appendChild(tileset);
+}
+
+editor.prototype.init_tilesheet_list = function ()
+{
+    var tilesheet_ids = Object.keys(GL_TILE_SHEETS);
+
+    for (var i = 0; i < tilesheet_ids.length; i++)
     {
-        var tile_ui = document.createElement('img');
-        tile_ui.src = GL_TILE_SET[i];
-        tile_ui.width = 32;
-        tile_ui.height = 32;
-        tile_ui.style.float = 'left';
-        tile_ui.style.padding = '1px';
-        tile_ui.onclick = this.create_tile_ui_handler(i);
-        GL_TILESET_ELEMENT.appendChild(tile_ui);
+        var option = document.createElement('option');
+        option.id = tilesheet_ids[i];
+        option.innerText = tilesheet_ids[i];
+        GL_TILESHEET_INPUT.appendChild(option);
     }
 }
 
@@ -157,6 +165,8 @@ editor.prototype.init_dom_events = function ()
 
     GL_EDITOR_ADD_LAYER.onclick = this.on_add_layer.bind(this);
 
+    GL_TILESHEET_INPUT.onchange = this.on_tilesheet_change.bind(this);
+
     window.onresize = this.on_window_resize.bind(this);
 }
 
@@ -251,6 +261,35 @@ editor.prototype.on_layer_toggle = function ()
             break;
         }
     }
+}
+
+editor.prototype.on_tileset_click = function (e)
+{
+    var img = e.target;
+
+    var x = e.x - compute_offset_left(img) + img.parentNode.parentNode.scrollLeft + window.scrollX;
+    var y = e.y - compute_offset_top(img) + img.parentNode.parentNode.scrollTop + window.scrollY;
+
+    var col = Math.floor(x / 33);
+    var row = Math.floor(y / 33);
+
+    var tile_info = gl_tile_sheet.get_tile_src(col, row);
+
+    var selection = gl_editor.get_map().get_selection();
+
+        for (var i = 0; i < selection.length; i++)
+        {
+            selection[i].set_img_id(tile_info.id);
+            selection[i].get_html_element().src = tile_info.src;
+        }
+    
+}
+
+editor.prototype.on_tilesheet_change = function (e)
+{
+    var tilesheet = e.target.options[e.target.selectedIndex].value;
+    gl_tile_sheet = new tile_sheet(GL_TILE_SHEETS[tilesheet]);
+    this.update_tileset_ui();
 }
 
 // UTILS

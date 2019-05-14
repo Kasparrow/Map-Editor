@@ -141,7 +141,6 @@ map.prototype.load_from_array = function (tiles)
         var datas = tiles[i].split(' ');
         var type = datas[0];
 
-        console.log(datas);
         if (type !== 'TILE')
             continue;
 

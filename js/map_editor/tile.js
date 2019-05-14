@@ -10,7 +10,7 @@ function tile (options)
 
 tile.prototype.get_img = function ()
 {
-    return GL_TILE_SET[this.get_img_id()];
+    return gl_tile_sheet.get_tile_src(this.get_img_id()).src;
 }
 
 tile.prototype.get_img_id = function ()

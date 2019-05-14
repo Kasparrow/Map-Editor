@@ -60,3 +60,33 @@ function click_elem (elem)
 	event_mouse.initMouseEvent("click", true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null)
 	elem.dispatchEvent(event_mouse)
 }
+
+function compute_offset_left (element)
+{
+    var offset = 0;
+
+    element = element.parentNode;
+
+    while (element.parentNode !== document.body)
+    {
+        offset += element.offsetLeft;
+        element = element.parentNode;
+    }
+
+    return offset;
+}
+
+function compute_offset_top (element)
+{
+    var offset = -56;
+
+    element = element.parentNode;
+
+    while (element.parentNode !== document.body)
+    {
+        offset += element.offsetTop;
+        element = element.parentNode;
+    }
+
+    return offset;
+}
