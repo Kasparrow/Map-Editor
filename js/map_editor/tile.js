@@ -62,5 +62,5 @@ tile.prototype.render = function (parent)
 
 tile.prototype.serialize = function (x, y)
 {
-    return "TILE " + this.get_img_id() + ' ' + x + ' ' + y + ' ' + this.get_layer().get_index() + ' 0\r\n';
+    return "TILE " + this.get_img_id() + ' ' + y + ' ' + x + ' ' + this.get_layer().get_index() + ' 0\r\n';
 }

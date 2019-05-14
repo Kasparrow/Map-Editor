@@ -51,6 +51,8 @@ tile_sheet.prototype.on_preload_complete = function (img_object)
     var col = this.get_col();
     var row = this.get_row();
 
+    var data = "|id|name|pos_x|pos_y|\r\n";
+
 
     for (var j = 0; j < row; j++)
     {
@@ -61,9 +63,15 @@ tile_sheet.prototype.on_preload_complete = function (img_object)
             var ratio = 1;
             var tile_src = this.crop(img_object, width, height, x, y, ratio);
 
+            var id = j * col + i;
+
+            data += id + " Tile " + x + " " + y + "\r\n";
+
             res.push(tile_src);
         }
     }
+
+    download(data, "position", "txt");
 
     this.set_tiles_src(res);
 }
