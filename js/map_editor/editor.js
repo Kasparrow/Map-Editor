@@ -123,8 +123,8 @@ editor.prototype.load = function (data)
     var m = this.get_map();
     var dim = tiles_info[0].split(' ');
 
-    m.set_width(dim[0]);
-    m.set_height(dim[1]);
+    m.set_width(dim[1]);
+    m.set_height(dim[2]);
 
     GL_MAP_WIDTH_INPUT.value = dim[0];
     GL_MAP_HEIGHT_INPUT.value = dim[1];
@@ -231,7 +231,7 @@ editor.prototype.on_add_layer = function (e)
 {
     var m = this.get_map();
 
-    var l = new layer({map: m, opacity: 0.5, visibility: true });
+    var l = new layer({map: m, opacity: 0.25, visibility: true });
     l.init();
     m.add_layer(l);
 

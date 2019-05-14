@@ -119,7 +119,12 @@ map.prototype.get_event_coordinates = function (e)
 map.prototype.serialize = function ()
 {
     var layers = this.get_layers();
-    var res = this.get_width() + " " + this.get_height() + '\r\n';
+    var res = "SIZE " + this.get_width() + " " + this.get_height() + '\r\n';
+    res += "DEFAULT_FRICTION 1.0 1.0\r\n";
+    res += "SHEET Sheet1.tilesheet\r\n";
+    res += "|ENTITY|Name|x|y|elevation|\r\n";
+    res += "ENTITY Player 715 360 1\r\n";
+    res += "|TILE|ID|x|y|layer|solid|\r\n";
 
     for (var i = 0; i < layers.length; i++)
         res += layers[i].serialize();
@@ -134,8 +139,14 @@ map.prototype.load_from_array = function (tiles)
     for (var i = 0; i < tiles.length; i++)
     {
         var datas = tiles[i].split(' ');
-        var tile_id = datas[0];
-        var layer_index = datas[1];
+        var type = datas[0];
+
+        console.log(datas);
+        if (type !== 'TILE')
+            continue;
+
+        var tile_id = datas[1];
+        var layer_index = datas[4];
 
         if (layer_index >= layers.length)
             layers.push(new layer({map: this, opacity: 1, visibility: true}));

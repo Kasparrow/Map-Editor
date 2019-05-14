@@ -73,11 +73,17 @@ layer.prototype.rescale = function (width, height)
 
 layer.prototype.serialize = function ()
 {
+    var width = this.get_map().get_width();
     var tiles = this.get_tiles();
     var res = '';
 
     for (var i = 0; i < tiles.length; i++)
-        res += tiles[i].serialize();
+    {
+        var x = Math.floor(i / width);
+        var y = i % width;
+
+        res += tiles[i].serialize(x, y);
+    }
     
     return res;
 }

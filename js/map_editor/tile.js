@@ -60,7 +60,7 @@ tile.prototype.render = function (parent)
     parent.appendChild(this.get_html_element());
 }
 
-tile.prototype.serialize = function ()
+tile.prototype.serialize = function (x, y)
 {
-    return this.get_img_id() + ' ' + this.get_layer().get_index() + '\r\n';
+    return "TILE " + this.get_img_id() + ' ' + x + ' ' + y + ' ' + this.get_layer().get_index() + ' 0\r\n';
 }
