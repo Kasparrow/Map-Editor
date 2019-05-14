@@ -146,10 +146,13 @@ map.prototype.load_from_array = function (tiles)
 
         var tile_id = datas[1];
         var layer_index = datas[4];
+        
 
         if (layer_index >= layers.length)
-            layers.push(new layer({map: this, opacity: 1, visibility: true}));
-
+        {
+            var opacity = layer_index == 0 ? 1 : 0.25;
+            layers.push(new layer({map: this, opacity: opacity, visibility: true}));
+        }
         var l = layers[layer_index];
         l.add_tile(new tile({img_id: tile_id, layer: l }));
     }

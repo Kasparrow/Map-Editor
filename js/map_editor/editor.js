@@ -146,6 +146,7 @@ editor.prototype.load = function (data)
     this.get_map().load_from_array(tiles_info);
     this.clear_map();
     this.render_map();
+    this.update_layers_ui();
 }
 
 editor.prototype.init_dom_events = function ()
