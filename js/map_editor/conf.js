@@ -14,6 +14,7 @@ var GL_TILESHEET_INPUT = document.getElementById('input-tilesheet');
 var GL_EDITOR_NEW = document.getElementById('btn-new');
 var GL_EDITOR_LOAD = document.getElementById('btn-load');
 var GL_EDITOR_SAVE = document.getElementById('btn-save');
+var GL_EDITOR_EXPORT = document.getElementById('btn-export');
 
 var GL_EDITOR_RENDER = document.getElementById('btn-render');
 var GL_EDITOR_EDIT = document.getElementById('btn-edit');

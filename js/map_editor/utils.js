@@ -90,3 +90,14 @@ function compute_offset_top (element)
 
     return offset;
 }
+
+function to_png (element)
+{
+   html2canvas(element).then(function (canvas) {
+       var image = new Image();
+        image.src = canvas.toDataURL();
+        
+        var tab = window.open("");
+        tab.document.write(image.outerHTML);
+    });
+}

@@ -160,6 +160,7 @@ editor.prototype.init_dom_events = function ()
     GL_EDITOR_NEW.onclick = this.on_new.bind(this);
     GL_EDITOR_LOAD.onclick = this.on_load.bind(this);
     GL_EDITOR_SAVE.onclick = this.on_save.bind(this);
+    GL_EDITOR_EXPORT.onclick = this.on_export.bind(this);
 
     GL_EDITOR_RENDER.onclick = this.on_render.bind(this);
     GL_EDITOR_EDIT.onclick = this.on_edit.bind(this);
@@ -226,6 +227,22 @@ editor.prototype.on_save = function (e)
     var data = this.get_map().serialize();
 
     download(data, GL_MAP_NAME_INPUT.value, "map"); 
+}
+
+editor.prototype.on_export = function (e)
+{
+    var restore_mode = false;
+
+    if (this.get_mode() === editor_mode.edit)
+    {
+        this.on_render();
+        restore_mode = true;
+    }
+
+    to_png(GL_MAP_ELEMENT.children[0]);
+
+    if (restore_mode)
+        this.on_edit();
 }
 
 editor.prototype.on_render = function (e)
