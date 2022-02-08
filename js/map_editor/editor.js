@@ -160,6 +160,7 @@ editor.prototype.init_dom_events = function ()
     GL_EDITOR_NEW.onclick = this.on_new.bind(this);
     GL_EDITOR_LOAD.onclick = this.on_load.bind(this);
     GL_EDITOR_SAVE.onclick = this.on_save.bind(this);
+    GL_EDITOR_SAVE_JSON.onclick = this.on_save_json.bind(this);
     GL_EDITOR_EXPORT.onclick = this.on_export.bind(this);
 
     GL_EDITOR_RENDER.onclick = this.on_render.bind(this);
@@ -229,6 +230,13 @@ editor.prototype.on_save = function (e)
     download(data, GL_MAP_NAME_INPUT.value, "map"); 
 }
 
+editor.prototype.on_save_json = function (e)
+{
+    const data = this.get_map().serialize_json();
+
+    download(JSON.stringify(data), GL_MAP_NAME_INPUT.value, "map"); 
+}
+
 editor.prototype.on_export = function (e)
 {
     var restore_mode = false;
@@ -259,7 +267,7 @@ editor.prototype.on_add_layer = function (e)
 {
     var m = this.get_map();
 
-    var l = new layer({map: m, opacity: 0.25, visibility: true });
+    var l = new layer({map: m, opacity: 1, visibility: true });
     l.init();
     m.add_layer(l);
 
@@ -283,13 +291,14 @@ editor.prototype.on_layer_toggle = function ()
 
 editor.prototype.on_tileset_click = function (e)
 {
+    const { width, height, padding } =  GL_TILE_SHEETS[GL_EDITOR_SELECTED_TILESHEET]
     var img = e.target;
 
     var x = e.x - compute_offset_left(img) + img.parentNode.parentNode.scrollLeft + window.scrollX;
     var y = e.y - compute_offset_top(img) + img.parentNode.parentNode.scrollTop + window.scrollY;
 
-    var col = Math.floor(x / 33);
-    var row = Math.floor(y / 33);
+    var col = Math.floor(x / (width + padding));
+    var row = Math.floor(y / (height + padding));
 
     var tile_info = gl_tile_sheet.get_tile_src(col, row);
 
@@ -307,6 +316,7 @@ editor.prototype.on_tilesheet_change = function (e)
 {
     var tilesheet = e.target.options[e.target.selectedIndex].value;
     gl_tile_sheet = new tile_sheet(GL_TILE_SHEETS[tilesheet]);
+    GL_EDITOR_SELECTED_TILESHEET = tilesheet
     this.update_tileset_ui();
 }
 

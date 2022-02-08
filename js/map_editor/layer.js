@@ -37,6 +37,7 @@ layer.prototype.render = function ()
 {
     var tiles = this.get_tiles();
     var element = this.get_html_element();
+    element.innerHTML= ''
 
     for (var i = 0; i < tiles.length; i++)
     {
@@ -58,15 +59,16 @@ layer.prototype.rescale = function (width, height)
     var element = this.get_html_element();
 
     if (new_size < current_size)
-        tiles.splice(new_size, current_size);
+        tiles = tiles.slice(0, new_size);
 
-    if (new_size > current_size)
+    else if (new_size > current_size)
         for (var i = current_size; i < new_size; i++)
             tiles.push(new tile({img_id: 0, layer: this }));
     
     if (!element)
         return;
 
+    this.set_tiles(tiles)
     element.style.width = width * GL_TILE_SIZE  + 'px';
     element.style.height = height * GL_TILE_SIZE + 'px';
 }
@@ -86,6 +88,19 @@ layer.prototype.serialize = function ()
     }
     
     return res;
+}
+
+layer.prototype.serialize_json = function ()
+{
+  const width = this.get_map().get_width();
+  const tiles = this.get_tiles();
+
+  return tiles.map((tile, tile_index) => {
+    const x = Math.floor(tile_index / width);
+    const y = tile_index % width;
+
+    return tile.serialize_json(x, y);
+  })
 }
 
 // - ACCESSOR

@@ -132,6 +132,20 @@ map.prototype.serialize = function ()
     return res;
 }
 
+map.prototype.serialize_json = function ()
+{
+  const res = {}
+  const layers = this.get_layers();
+
+  return {
+    width: this.get_width(),
+    height: this.get_height(),
+    layers: layers.map((layer) => {
+      return layer.serialize_json();
+    })
+  }
+}
+
 map.prototype.load_from_array = function (tiles)
 {
     var layers = [];
@@ -150,7 +164,7 @@ map.prototype.load_from_array = function (tiles)
 
         if (layer_index >= layers.length)
         {
-            var opacity = layer_index == 0 ? 1 : 0.25;
+            var opacity = 1;
             layers.push(new layer({map: this, opacity: opacity, visibility: true}));
         }
         var l = layers[layer_index];

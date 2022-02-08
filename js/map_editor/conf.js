@@ -14,6 +14,7 @@ var GL_TILESHEET_INPUT = document.getElementById('input-tilesheet');
 var GL_EDITOR_NEW = document.getElementById('btn-new');
 var GL_EDITOR_LOAD = document.getElementById('btn-load');
 var GL_EDITOR_SAVE = document.getElementById('btn-save');
+var GL_EDITOR_SAVE_JSON = document.getElementById('btn-save-json');
 var GL_EDITOR_EXPORT = document.getElementById('btn-export');
 
 var GL_EDITOR_RENDER = document.getElementById('btn-render');
@@ -23,6 +24,7 @@ var GL_TILESET_ELEMENT = document.getElementById('tileset');
 var GL_LAYER_ELEMENT = document.getElementById('layers');
 
 var GL_EDITOR_ADD_LAYER = document.getElementById('btn-add-layer');
+var GL_EDITOR_SELECTED_TILESHEET = 'Summer';
 
 var GL_TILE_SHEETS = {
     Summer: {
@@ -41,6 +43,23 @@ var GL_TILE_SHEETS = {
         padding: 1,
         col: 19,
         row: 20
+    },
+
+    Maurel: {
+      img: 'resources/tileshit_maurel.png',
+      width: 64,
+      height: 64,
+      padding: 0,
+      col: 4,
+      row: 1
+    },
+
+    Maurel2: {
+      img: 'resources/tileshit_2.png',
+      width: 32,
+      height: 32,
+      padding: 0,
+      col: 5,
+      row: 5
     }
-    
 }
